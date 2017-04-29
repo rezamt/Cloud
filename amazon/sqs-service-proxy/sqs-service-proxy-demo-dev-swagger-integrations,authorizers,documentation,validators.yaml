@@ -1,0 +1,328 @@
+---
+swagger: "2.0"
+info:
+  version: "2017-04-29T15:22:50Z"
+  title: "sqs-service-proxy-demo"
+host: "4s5e8093h2.execute-api.ap-southeast-2.amazonaws.com"
+basePath: "/dev"
+schemes:
+- "https"
+paths:
+  /v1/batch/purge:
+    delete:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-integration:
+        credentials: "arn:aws:iam::AWS-ACCOUNT-ID:role/apigateway-sqs-demoqueue"
+        responses:
+          default:
+            statusCode: "200"
+        requestParameters:
+          integration.request.header.Content-Type: "'application/x-www-form-urlencoded'"
+        uri: "arn:aws:apigateway:ap-southeast-2:sqs:path/AWS-ACCOUNT-ID/demoqueue"
+        passthroughBehavior: "when_no_templates"
+        httpMethod: "POST"
+        type: "aws"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+  /v1/batch/send:
+    post:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-integration:
+        credentials: "arn:aws:iam::AWS-ACCOUNT-ID:role/apigateway-sqs-demoqueue"
+        responses:
+          default:
+            statusCode: "200"
+        requestParameters:
+          integration.request.header.Content-Type: "'application/x-www-form-urlencoded'"
+        uri: "arn:aws:apigateway:ap-southeast-2:sqs:path/AWS-ACCOUNT-ID/demoqueue"
+        passthroughBehavior: "when_no_templates"
+        httpMethod: "POST"
+        type: "aws"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+  /v1/purge:
+    delete:
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ReceiptHandle"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-integration:
+        credentials: "arn:aws:iam::AWS-ACCOUNT-ID:role/apigateway-sqs-demoqueue"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestParameters:
+          integration.request.querystring.ReceiptHandle: "method.request.querystring.ReceiptHandle"
+          integration.request.querystring.Version: "'2012-11-05'"
+          integration.request.querystring.Action: "'DeleteMessage'"
+        uri: "arn:aws:apigateway:ap-southeast-2:sqs:path/AWS-ACCOUNT-ID/demoqueue"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "GET"
+        type: "aws"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+  /v1/receive:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+      - name: "MaxNumberOfMessages"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "AttributeName"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "VisibilityTimeout"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-integration:
+        credentials: "arn:aws:iam::AWS-ACCOUNT-ID:role/apigateway-sqs-demoqueue"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestParameters:
+          integration.request.querystring.Version: "'2012-11-05'"
+          integration.request.querystring.MaxNumberOfMessages: "method.request.querystring.MaxNumberOfMessages"
+          integration.request.querystring.VisibilityTimeout: "method.request.querystring.VisibilityTimeout"
+          integration.request.querystring.Action: "'ReceiveMessage'"
+          integration.request.querystring.AttributeName: "method.request.querystring.AttributeName"
+          integration.request.header.Content-Type: "'application/json'"
+        uri: "arn:aws:apigateway:ap-southeast-2:sqs:path/AWS-ACCOUNT-ID/demoqueue"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "GET"
+        type: "aws"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+  /v1/send:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+      - name: "MessageBody"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      x-amazon-apigateway-integration:
+        credentials: "arn:aws:iam::AWS-ACCOUNT-ID:role/apigateway-sqs-demoqueue"
+        responses:
+          default:
+            statusCode: "200"
+        requestParameters:
+          integration.request.querystring.MessageBody: "method.request.querystring.MessageBody"
+          integration.request.querystring.Action: "'SendMessage'"
+          integration.request.header.Content-Type: "'application/json'"
+        uri: "arn:aws:apigateway:ap-southeast-2:sqs:path/AWS-ACCOUNT-ID/demoqueue"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "GET"
+        type: "aws"
+    post:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      x-amazon-apigateway-integration:
+        credentials: "arn:aws:iam::AWS-ACCOUNT-ID:role/apigateway-sqs-demoqueue"
+        responses:
+          default:
+            statusCode: "200"
+        requestParameters:
+          integration.request.header.Content-Type: "'application/x-www-form-urlencoded'"
+        uri: "arn:aws:apigateway:ap-southeast-2:sqs:path/AWS-ACCOUNT-ID/demoqueue"
+        passthroughBehavior: "never"
+        httpMethod: "POST"
+        type: "aws"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+definitions:
+  Empty:
+    type: "object"
+    title: "Empty Schema"

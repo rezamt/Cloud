@@ -1,0 +1,102 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Amazon SQS Demo [PostMan]",
+		"_postman_id": "a21b7476-bf7d-060f-d2d7-ee3ef80cbc2b",
+		"description": "Created by : Reza (rezamt@gmail.com)\n\nSending Message\n\nReceiving Message\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Send Message (GET)",
+			"request": {
+				"url": "http://sqs.ap-southeast-2.amazonaws.com/{{ACCOUNTID}}/{{QUEUE}}?Action=SendMessage&Version=2012-11-05&MessageBody=HelloMessage",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					},
+					{
+						"key": "Host",
+						"value": "sqs.ap-southeast-2.amazonaws.com",
+						"description": ""
+					},
+					{
+						"key": "X-Amz-Date",
+						"value": "20170427T130710Z",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "AWS4-HMAC-SHA256 Credential=1234567890/20170427/ap-southeast-2/sqs/aws4_request, SignedHeaders=content-type;host;x-amz-date, Signature=98d86583a5b024aa1585c5cec1890c186cd7618573aeef27d059a15994b85f2a",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "Amazon SQS Send Message - Using GET and Query Parameter"
+			},
+			"response": []
+		},
+		{
+			"name": "Send Message (POST)",
+			"request": {
+				"url": "http://sqs.ap-southeast-2.amazonaws.com/{{ACCOUNTID}}/{{QUEUE}}",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					},
+					{
+						"key": "Host",
+						"value": "sqs.ap-southeast-2.amazonaws.com",
+						"description": ""
+					},
+					{
+						"key": "X-Amz-Date",
+						"value": "20170427T130720Z",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "AWS4-HMAC-SHA256 Credential=1234567890/20170427/ap-southeast-2/sqs/aws4_request, SignedHeaders=content-length;content-type;host;x-amz-date, Signature=2f3f9bec160e76896f2377ba6c305859f337a1c2364f4b1c05c18312d558bf47",
+						"description": ""
+					},
+					{
+						"key": "Content-Length",
+						"value": "60",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "MessageBody",
+							"value": "HelloWORLD",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Action",
+							"value": "SendMessage",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Version",
+							"value": "2012-11-05",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Amazon SQS Send Message - Using GET and Query Parameter"
+			},
+			"response": []
+		}
+	]
+}
